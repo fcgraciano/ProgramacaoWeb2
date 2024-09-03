@@ -1,3 +1,5 @@
-<script src="bootstrap.bundle.min.js"></script>
+
+</div>
+<script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
