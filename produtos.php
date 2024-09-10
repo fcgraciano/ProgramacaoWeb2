@@ -27,9 +27,8 @@
 
 <?php
         include "conexao.php";
-        $sql = "SELECT Id, Descricao, Valor FROM produtos";
+        $sql = "SELECT Id, Descricao, Valor, Imagem FROM produtos order by Id desc";
         $resultado = mysqli_query($conexao,$sql);
-
 ?>
 <table class="table table-striped table-hover table-bordered">
         <thead>
@@ -37,6 +36,7 @@
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Valor</th>
+                <th>Imagem</th>
                 <th></th>
             </tr>
         </thead>
@@ -50,6 +50,7 @@
                     echo "<td>" . $row["Id"] . "</td>";
                     echo "<td>" . $row["Descricao"] . "</td>";
                     echo "<td>" . $row["Valor"] . "</td>";
+                    echo "<td><img src='/".basename(__DIR__)."/img/".$row["Imagem"]."' width='50' height='50' class='img-fluid' /></td>";
                     echo "<td><a class='btn btn-warning'>Editar</a>  ";
                     echo "<a class='btn btn-danger'>Excluir</a></td>";
                     echo "</tr>";
@@ -57,10 +58,9 @@
             } else {
                 echo "<tr><td colspan='3'>Nenhum registro encontrado</td></tr>";
             }
-            
             $conexao->close();
             ?>
         </tbody>
     </table>
 
-<?php include "rodape.php"; ?>
+    <?php include "rodape.php"; ?>
