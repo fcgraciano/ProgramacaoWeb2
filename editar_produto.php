@@ -8,6 +8,25 @@
         $valor = str_replace(",",".",$_POST['valor']) ;
         $imagem = $_POST['imagem'];
         $id = $_GET['id'];
+
+        if(isset($_FILES['novaImagem']))
+        {
+            $nomeArquivo = $_FILES['novaImagem']['name'];
+            $tmpNomeArquivo = $_FILES['novaImagem']['tmp_name'];
+            $caminhoDestino = dirname(__FILE__)."/img/". basename($nomeArquivo);
+            if (move_uploaded_file($tmpNomeArquivo, $caminhoDestino)) {
+                $imagem = basename($nomeArquivo);
+            } else {
+                
+                $imagem = "semfoto.png"; 
+            }
+        }
+        else
+        {
+            echo "Erro ao enviar a imagem.";
+               $imagem = "semfoto.png"; 
+        }
+
         $sql = "Update Produtos set Descricao = '$descricao', Valor = $valor, Imagem = '$imagem' where Id = $id";
         $resultado = $conexao->query($sql);
         if($resultado)
