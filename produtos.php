@@ -1,5 +1,4 @@
 <?php include "cabecalho.php"; ?>
-
 <div class="card">
     <div class="card-header">
         Lista de Produtos
@@ -13,7 +12,7 @@
                         </a>
                     </div>
                     <div class="col-md-8">
-                        <input class="form-control" name="consulta" type="text" />
+                        <input class="form-control" value="<?php if(isset($_GET['consulta'])){ echo $_GET['consulta']; } ?>" name="consulta" type="text" />
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-primary">
@@ -27,8 +26,20 @@
 
 <?php
         include "conexao.php";
-        $sql = "SELECT Id, Descricao, Valor, Imagem FROM produtos order by Id desc";
-        $resultado = mysqli_query($conexao,$sql);
+        if(isset($_GET['consulta']) && !empty($_GET['consulta']) )
+        {
+            $consulta = $_GET['consulta'];
+            $sql = "SELECT Id, Descricao, Valor, Imagem FROM produtos
+                    WHERE Descricao like '%$consulta%'
+                     order by Id desc";
+            $resultado = mysqli_query($conexao,$sql);
+        }
+        else
+        {
+            $sql = "SELECT Id, Descricao, Valor, Imagem FROM produtos order by Id desc";
+            $resultado = mysqli_query($conexao,$sql);
+        }
+        
 ?>
 <table class="table table-striped table-hover table-bordered">
         <thead>
